@@ -1,3 +1,10 @@
+---
+title: "Computer Vision (CV)"
+description: "Learn how to make machines see and interpret visual information from the world around them."
+duration: "8 weeks"
+difficulty: "Intermediate"
+---
+
 # 👁️ Computer Vision (CV)
 
 ## What is Computer Vision?

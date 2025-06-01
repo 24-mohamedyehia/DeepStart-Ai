@@ -1,3 +1,10 @@
+---
+title: "Deep Learning"
+description: "Master deep learning and neural networks to build powerful AI systems that can learn complex patterns."
+duration: "12 weeks"
+difficulty: "Intermediate to Advanced"
+---
+
 # 🧠 Deep Learning
 
 ## Why Learn Deep Learning?

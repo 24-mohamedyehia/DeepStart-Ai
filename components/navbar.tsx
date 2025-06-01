@@ -1,29 +1,31 @@
-import Link from "next/link"
-import { Brain } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 export function Navbar() {
   return (
-    <nav className="bg-white/80 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50">
+    <nav className="bg-white shadow">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          <Link href="/" className="flex items-center space-x-2">
-            <Brain className="h-8 w-8 text-blue-600" />
-            <span className="text-xl font-bold text-slate-800">Deep Start AI</span>
-          </Link>
-
-          <div className="hidden md:flex items-center space-x-8">
-            <Link href="/" className="text-slate-600 hover:text-blue-600 transition-colors">
-              Home
+        <div className="flex justify-between h-16">
+          <div className="flex">
+            <div className="flex-shrink-0 flex items-center">
+              <Link href="/" className="text-xl font-bold text-blue-600">
+                DeepStart.AI
+              </Link>
+            </div>
+          </div>
+          <div className="flex items-center">
+            <Link href="/">
+              <Button variant="ghost">Home</Button>
             </Link>
-            <Link href="#roadmaps" className="text-slate-600 hover:text-blue-600 transition-colors">
-              Roadmaps
+            <Link href="#roadmaps">
+              <Button variant="ghost">Roadmaps</Button>
             </Link>
-            <Link href="#about" className="text-slate-600 hover:text-blue-600 transition-colors">
-              About
+            <Link href="#">
+              <Button variant="ghost">About</Button>
             </Link>
           </div>
         </div>
       </div>
     </nav>
-  )
+  );
 }

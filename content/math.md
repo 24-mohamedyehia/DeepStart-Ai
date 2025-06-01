@@ -1,3 +1,10 @@
+---
+title: "Mathematics for AI"
+description: "Master the essential mathematical concepts that power artificial intelligence and machine learning."
+duration: "6 weeks"
+difficulty: "Beginner to Intermediate"
+---
+
 # Mathematics for Artificial Intelligence (AI)
 
 ## Why Mathematics?

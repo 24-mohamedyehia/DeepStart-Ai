@@ -1,31 +1,64 @@
 import fs from 'fs';
 import path from 'path';
+import matter from 'gray-matter';
 
-// Function to read markdown files from the content directory
-export async function getMarkdownContent(filename: string) {
+const contentDirectory = path.join(process.cwd(), 'content');
+
+export interface RoadmapFrontmatter {
+  title: string;
+  description: string;
+  duration: string;
+  difficulty: string;
+  slug: string;
+}
+
+export interface Roadmap extends RoadmapFrontmatter {
+  content: string;
+}
+
+export async function getRoadmapBySlug(slug: string): Promise<Roadmap | null> {
   try {
-    const filePath = path.join(process.cwd(), 'content', `${filename}.md`);
-    const fileContent = fs.readFileSync(filePath, 'utf8');
-    return fileContent;
+    const filePath = path.join(contentDirectory, `${slug}.md`);
+    const fileContents = fs.readFileSync(filePath, 'utf8');
+    const { data, content } = matter(fileContents);
+    
+    return {
+      title: data.title || '',
+      description: data.description || '',
+      duration: data.duration || '',
+      difficulty: data.difficulty || '',
+      slug,
+      content,
+    };
   } catch (error) {
-    console.error(`Error reading markdown file: ${filename}.md`, error);
+    console.error(`Error loading roadmap for slug ${slug}:`, error);
     return null;
   }
 }
 
-// Function to get all available markdown files
-export async function getAllMarkdownFiles() {
+export async function getAllRoadmaps(): Promise<RoadmapFrontmatter[]> {
   try {
-    const contentDir = path.join(process.cwd(), 'content');
-    const files = fs.readdirSync(contentDir);
-    return files
-      .filter(file => file.endsWith('.md'))
-      .map(file => ({
-        id: file.replace('.md', ''),
-        path: path.join(contentDir, file)
-      }));
+    const fileNames = fs.readdirSync(contentDirectory);
+    const roadmaps = fileNames
+      .filter(fileName => fileName.endsWith('.md'))
+      .map(fileName => {
+        const slug = fileName.replace(/\.md$/, '');
+        const filePath = path.join(contentDirectory, fileName);
+        const fileContents = fs.readFileSync(filePath, 'utf8');
+        const { data } = matter(fileContents);
+        
+        return {
+          title: data.title || '',
+          description: data.description || '',
+          duration: data.duration || '',
+          difficulty: data.difficulty || '',
+          slug,
+        };
+      });
+    
+    return roadmaps;
   } catch (error) {
-    console.error('Error reading content directory', error);
+    console.error('Error loading roadmaps:', error);
     return [];
   }
 }

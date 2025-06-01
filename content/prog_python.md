@@ -1,3 +1,10 @@
+---
+title: "Programming with Python for AI"
+description: "Learn Python programming fundamentals and essential libraries for artificial intelligence development."
+duration: "8 weeks"
+difficulty: "Beginner to Intermediate"
+---
+
 # 🐍 Programming with Python for AI
 
 ## Why Python for AI?

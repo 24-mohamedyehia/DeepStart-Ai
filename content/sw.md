@@ -1,3 +1,10 @@
+---
+title: "Software Engineering for AI"
+description: "Learn essential software engineering skills to build, deploy, and maintain AI systems in production."
+duration: "6 weeks"
+difficulty: "Intermediate"
+---
+
 # 🧠 Software Engineering Skills for AI
 
 ## Why Software Engineering Matters in AI?
