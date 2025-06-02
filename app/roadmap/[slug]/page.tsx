@@ -1,87 +1,25 @@
-import { notFound } from "next/navigation"
-import { Navbar } from "@/components/navbar"
-import { Footer } from "@/components/footer"
-import { Button } from "@/components/ui/button"
-import { ArrowLeft, BookOpen, Clock, Target } from "lucide-react"
-import Link from "next/link"
-import { getMarkdownContent } from "@/lib/markdown"
-import ReactMarkdown from "react-markdown"
-import remarkGfm from "remark-gfm"
-import rehypePrism from "rehype-prism-plus"
-// Note: CSS import moved to app/globals.css
+import { notFound } from "next/navigation";
+import Link from "next/link";
+import { ArrowLeft, BookOpen, Clock, Target } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+import rehypePrism from "rehype-prism-plus";
 
-
-
-// Metadata for each roadmap
-const roadmapMetadata = {
-  "mathematics-for-ai": {
-    title: "Mathematics For AI",
-    description: "Master the mathematical foundations essential for understanding AI algorithms",
-    duration: "8-12 weeks",
-    difficulty: "Beginner to Intermediate",
-    markdownFile: "math"
-  },
-  "python-for-ai": {
-    title: "Programming with Python for AI",
-    description: "Learn Python programming specifically tailored for AI development",
-    duration: "6-10 weeks",
-    difficulty: "Beginner to Intermediate",
-    markdownFile: "prog_python"
-  },
-  "machine-learning": {
-    title: "Machine Learning",
-    description: "Dive into the core concepts and algorithms of machine learning",
-    duration: "10-14 weeks",
-    difficulty: "Intermediate",
-    markdownFile: "ml"
-  },
-  "deep-learning": {
-    title: "Deep Learning",
-    description: "Master neural networks and deep learning architectures",
-    duration: "12-16 weeks",
-    difficulty: "Intermediate to Advanced",
-    markdownFile: "dl"
-  },
-  "natural-language-processing": {
-    title: "Natural Language Processing",
-    description: "Master the art of making machines understand human language",
-    duration: "10-14 weeks",
-    difficulty: "Intermediate to Advanced",
-    markdownFile: "nlp"
-  },
-  "computer-vision": {
-    title: "Computer Vision",
-    description: "Learn to build systems that can understand and interpret visual information",
-    duration: "10-14 weeks",
-    difficulty: "Intermediate to Advanced",
-    markdownFile: "cv"
-  },
-  "software-engineering-for-ai": {
-    title: "Software Engineering for AI",
-    description: "Learn best practices for building production-ready AI systems",
-    duration: "8-12 weeks",
-    difficulty: "Intermediate",
-    markdownFile: "sw"
-  }
-};
+import { Navbar } from "@/components/navbar";
+import { Footer } from "@/components/footer";
+import { Button } from "@/components/ui/button";
+import { getRoadmapBySlug } from "@/lib/markdown";
 
 export default async function RoadmapPage({
   params,
 }: {
-  params: { slug: string }
+  params: { slug: string };
 }) {
-  const { slug } = params
-  const roadmap = roadmapMetadata[slug as keyof typeof roadmapMetadata]
+  const { slug } = await params;
+  const roadmap = await getRoadmapBySlug(slug);
 
   if (!roadmap) {
-    notFound()
-  }
-
-  // Load markdown content from file
-  const markdownContent = await getMarkdownContent(roadmap.markdownFile)
-  
-  if (!markdownContent) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -98,7 +36,9 @@ export default async function RoadmapPage({
           </Link>
 
           <div className="bg-white rounded-lg shadow-lg p-8 mb-8">
-            <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">{roadmap.title}</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-slate-800 mb-4">
+              {roadmap.title}
+            </h1>
             <p className="text-lg text-slate-600 mb-6">{roadmap.description}</p>
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
@@ -130,32 +70,48 @@ export default async function RoadmapPage({
               remarkPlugins={[remarkGfm]}
               rehypePlugins={[rehypePrism]}
               components={{
-                table: ({children, ...props}) => (
-                  <table className="w-full border-collapse border border-slate-300 rounded-lg overflow-hidden" {...props}>{children}</table>
+                table: ({ children, ...props }) => (
+                  <table
+                    className="w-full border-collapse border border-slate-300 rounded-lg overflow-hidden"
+                    {...props}>
+                    {children}
+                  </table>
                 ),
-                th: ({children, ...props}) => (
-                  <th className="bg-slate-100 p-2 border border-slate-200" {...props}>{children}</th>
+                th: ({ children, ...props }) => (
+                  <th
+                    className="bg-slate-100 p-2 border border-slate-200"
+                    {...props}>
+                    {children}
+                  </th>
                 ),
-                td: ({children, ...props}) => (
-                  <td className="p-2 border border-slate-200" {...props}>{children}</td>
+                td: ({ children, ...props }) => (
+                  <td className="p-2 border border-slate-200" {...props}>
+                    {children}
+                  </td>
                 ),
-                pre: ({children, ...props}) => (
-                  <pre className="bg-slate-900 text-slate-100 rounded-lg p-4 overflow-x-auto" {...props}>{children}</pre>
+                pre: ({ children, ...props }) => (
+                  <pre
+                    className="bg-slate-900 text-slate-100 rounded-lg p-4 overflow-x-auto"
+                    {...props}>
+                    {children}
+                  </pre>
                 ),
-                code: ({inline, className, children, ...props}: {inline?: boolean; className?: string; children: React.ReactNode; [key: string]: any}) => {
-                  // For code blocks with language specification
-                  const match = /language-(\w+)/.exec(className || '');
+                code: ({ inline, className, children, ...props }: any) => {
+                  const match = /language-(\w+)/.exec(className || "");
                   return inline ? (
-                    // Inline code
-                    <code className="bg-slate-100 rounded px-1 py-0.5 text-pink-700" {...props}>{children}</code>
+                    <code
+                      className="bg-slate-100 rounded px-1 py-0.5 text-pink-700"
+                      {...props}>
+                      {children}
+                    </code>
                   ) : (
-                    // Code block - preserve className for syntax highlighting
-                    <code className={className} {...props}>{children}</code>
+                    <code className={className} {...props}>
+                      {children}
+                    </code>
                   );
                 },
-              }}
-            >
-              {markdownContent}
+              }}>
+              {roadmap.content}
             </ReactMarkdown>
           </article>
         </div>
@@ -163,5 +119,5 @@ export default async function RoadmapPage({
 
       <Footer />
     </div>
-  )
+  );
 }

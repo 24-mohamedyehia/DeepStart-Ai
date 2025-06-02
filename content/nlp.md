@@ -1,3 +1,10 @@
+---
+title: "Natural Language Processing (NLP)"
+description: "Learn how to make computers understand, process, and generate human language text and speech."
+duration: "10 weeks"
+difficulty: "Intermediate"
+---
+
 # 📚 Natural Language Processing (NLP)
 
 ## What is NLP?

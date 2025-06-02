@@ -1,3 +1,10 @@
+---
+title: "Machine Learning Fundamentals"
+description: "Master the core concepts and algorithms of machine learning to build intelligent systems."
+duration: "10 weeks"
+difficulty: "Beginner to Intermediate"
+---
+
 # 🤖 Machine Learning 
 
 ## Why Learn Machine Learning?
